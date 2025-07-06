@@ -3,6 +3,8 @@
 A sleek, OnePlus‑inspired calculator built with **HTML**, **CSS**, and **JavaScript**.  
 Mimics the look and feel of the OnePlus OxygenOS calculator in dark mode, complete with ripple effects, smooth fade‑in/out transitions, and correct percentage calculations.
 
+🌐 **Live Demo:**  
+🔗 [neversettlecalc.netlify.app](https://neversettlecalc.netlify.app/)
 ---
 
 ## 🚀 Features
