@@ -51,6 +51,7 @@ function appendToDisplay(value) {
 function calculate() {
   const disp = document.getElementById("displayText");
   const egg = document.getElementById("easterEgg");
+  const wrap = document.getElementById("display");
   let str = disp.textContent;
 
   if (str === "1+") {
@@ -65,7 +66,7 @@ function calculate() {
     str = processSymbols(str);
     let res = eval(str);
     if (typeof res === "number" && !Number.isInteger(res)) {
-      res = parseFloat(res.toFixed(15));
+      res = parseFloat(res.toFixed(14));
     }
     disp.textContent = res;
     wrap.scrollLeft = wrap.scrollWidth;
@@ -76,6 +77,26 @@ function calculate() {
   }
 }
 
+function processSymbols(expr) {
+    expr = expr
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/−/g, '-');
+
+    // Case 1: e.g. 5%8 → (5/100)*8
+    expr = expr.replace(/(\d+(\.\d+)?)%(\d+)/g, "($1/100)*$3");
+
+    // Case 2: e.g. 100 + 10% → 100 + (100 * 10 / 100)
+    expr = expr.replace(/(\d+(\.\d+)?)([\+\-\*\/])(\d+(\.\d+)?)%/g,
+        (match, base, _, operator, percent) => {
+            return `${base}${operator}(${base}*${percent}/100)`;
+        });
+
+    // Case 3: standalone percent, like "50%" → (50 / 100)
+    expr = expr.replace(/(\d+(\.\d+)?)%/g, "($1/100)");
+
+    return expr;
+}
 
 function fadeOutDisplayText() {
   const text = document.getElementById("displayText");
