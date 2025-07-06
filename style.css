@@ -50,7 +50,7 @@ body {
 .display {
   width:100%;
   background-color: #1a1a1a;
-  font-size: 2em;
+   font-size: clamp(2rem, 2vw, 2.5rem);
   height: 50px;
   line-height: 50px;
   margin-bottom: 20px;
@@ -60,12 +60,13 @@ body {
   border-radius: 10px;
   transition: all 0.2s ease;
   overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
   transition: opacity 0.3s ease;
 }
-
-.display .fade
-{
-  opacity: 0;
+.display::-webkit-scrollbar {
+  display: none; /* hide scrollbar for Chrome */
 }
 .buttons {
   flex-grow: 1; 

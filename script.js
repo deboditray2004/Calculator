@@ -24,6 +24,7 @@ function appendToDisplay(value) {
     else 
         str += value;
     disp.textContent=str;
+    disp.scrollLeft = disp.scrollWidth;
 }
 
 
@@ -36,14 +37,24 @@ function calculate() {
         return;
     }
     try {
-        str = processPercentages(str);
-        disp.textContent = eval(str);
-    } catch {
+        str = processSymbols(str);
+        let res=eval(str);
+        if (typeof res === "number" && !Number.isInteger(res)) 
+            res = parseFloat(res.toFixed(15));
+        disp.textContent = res;
+        disp.scrollLeft = disp.scrollWidth;
+    }
+    catch {
         disp.textContent = "Error";
     }
 }
 
-function processPercentages(expr) {
+function processSymbols(expr) {
+    expr = expr
+        .replace(/×/g, '*')
+        .replace(/÷/g, '/')
+        .replace(/−/g, '-'); // note: `−` is a different unicode from `-`
+
     // Case 1: e.g. 5%8 → (5/100)*8
     expr = expr.replace(/(\d+(\.\d+)?)%(\d+)/g, "($1/100)*$3");
 
@@ -55,5 +66,6 @@ function processPercentages(expr) {
 
     // Case 3: standalone percent, like "50%" → (50 / 100)
     expr = expr.replace(/(\d+(\.\d+)?)%/g, "($1/100)");
+
     return expr;
 }
