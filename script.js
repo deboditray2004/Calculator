@@ -1,71 +1,90 @@
-function clearDisplay()
-{
-    document.getElementById("display").textContent = "Calculator";
+function clearDisplay() {
+  const disp = document.getElementById("displayText");
+  const wrap = document.getElementById("display");
+  fadeOutDisplayText();
+  setTimeout(() => {
+    disp.textContent = "Calculator";
+    fadeInDisplayText();
+  }, 150);
+  document.getElementById("easterEgg").classList.remove("show");
+  document.querySelector('.top-panel').classList.remove("red-bg");
+  document.getElementById('display').classList.remove("red-bg");
 }
 
-function deleteLast()
-{
-    const disp=document.getElementById("display");
-    let str=disp.innerText;
-    if(str==="Calculator" || str==="Error")
-        return;
-    else if(str.length==1)
-        str="Calculator ";
-    str=str.substring(0,str.length-1);
-    disp.textContent=str;
+function deleteLast() {
+  const disp = document.getElementById("displayText");
+  let str = disp.textContent;
+  if (str === "Calculator" || str === "Error") return;
 
+  str = str.slice(0, -1);
+  if (str.length === 0) {
+    clearDisplay();
+    return;
+  }
+  disp.textContent = str;
 }
+
 
 function appendToDisplay(value) {
-    const disp=document.getElementById("display");
-    let str=disp.innerText;
-    if(str==="Calculator" || str==="Error" || str==="0")
-        str = value;
-    else 
-        str += value;
-    disp.textContent=str;
-    disp.scrollLeft = disp.scrollWidth;
+  const disp = document.getElementById("displayText");
+  const wrap = document.getElementById("display");
+  const egg = document.getElementById("easterEgg");
+
+  if (disp.textContent === "Calculator" || disp.textContent === "Error" || disp.textContent === "0") {
+    fadeOutDisplayText();
+    setTimeout(() => {
+      disp.textContent = value;
+      fadeInDisplayText();
+    }, 150);
+  } else {
+    disp.textContent += value;
+  }
+
+  wrap.scrollLeft = wrap.scrollWidth;
+  egg.classList.remove("show");
+  document.querySelector('.top-panel').classList.remove("red-bg");
+  document.getElementById('display').classList.remove("red-bg");
 }
+
 
 
 function calculate() {
-    const disp = document.getElementById("display");
-    let str=disp.innerText;
-    if(str==="1+")
-    {
-        disp.textContent="NEVER SETTLE";
-        return;
+  const disp = document.getElementById("displayText");
+  const egg = document.getElementById("easterEgg");
+  let str = disp.textContent;
+
+  if (str === "1+") {
+    egg.classList.add("show");
+    document.querySelector('.top-panel').classList.add("red-bg");
+    document.getElementById('display').classList.add("red-bg"); 
+    disp.textContent = "";
+    return;
+  }
+
+  try {
+    str = processSymbols(str);
+    let res = eval(str);
+    if (typeof res === "number" && !Number.isInteger(res)) {
+      res = parseFloat(res.toFixed(15));
     }
-    try {
-        str = processSymbols(str);
-        let res=eval(str);
-        if (typeof res === "number" && !Number.isInteger(res)) 
-            res = parseFloat(res.toFixed(15));
-        disp.textContent = res;
-        disp.scrollLeft = disp.scrollWidth;
-    }
-    catch {
-        disp.textContent = "Error";
-    }
+    disp.textContent = res;
+    wrap.scrollLeft = wrap.scrollWidth;
+    egg.classList.remove("show");
+    wrap.classList.remove("red-bg");
+  } catch {
+    disp.textContent = "Error";
+  }
 }
 
-function processSymbols(expr) {
-    expr = expr
-        .replace(/×/g, '*')
-        .replace(/÷/g, '/')
-        .replace(/−/g, '-'); // note: `−` is a different unicode from `-`
 
-    // Case 1: e.g. 5%8 → (5/100)*8
-    expr = expr.replace(/(\d+(\.\d+)?)%(\d+)/g, "($1/100)*$3");
+function fadeOutDisplayText() {
+  const text = document.getElementById("displayText");
+  text.classList.remove("fade-in");
+  text.classList.add("fade-out");
+}
 
-    // Case 2: e.g. 100 + 10% → 100 + (100 * 10 / 100)
-    expr = expr.replace(/(\d+(\.\d+)?)([\+\-\*\/])(\d+(\.\d+)?)%/g,
-        (match, base, _, operator, percent) => {
-            return `${base}${operator}(${base}*${percent}/100)`;
-        });
-
-    // Case 3: standalone percent, like "50%" → (50 / 100)
-    expr = expr.replace(/(\d+(\.\d+)?)%/g, "($1/100)");
-
-    return expr;
+function fadeInDisplayText() {
+  const text = document.getElementById("displayText");
+  text.classList.remove("fade-out");
+  text.classList.add("fade-in");
 }
