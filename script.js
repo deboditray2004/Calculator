@@ -1,6 +1,6 @@
 function clearDisplay() {
   const disp = document.getElementById("displayText");
-  const wrap = document.getElementById("display");
+  //const wrap = document.getElementById("display");
   fadeOutDisplayText();
   setTimeout(() => {
     disp.textContent = "Calculator";
