@@ -73,7 +73,6 @@ body {
 #displayText {
   display: inline-block;
   transition: opacity 0.3s ease;
-  text-align: left;
 }
 
 #displayText.fade-out {
