@@ -13,30 +13,51 @@
                     <div id="easterEgg">NEVER SETTLE</div>
                 </div>
             </div> 
-              
-            <div class="buttons">
-                <button class="button" onclick="clearDisplay()">AC</button>
-                <button class="button" onclick="deleteLast()">&#x232b;</button>
-                <button class="button" onclick="appendToDisplay('%')">%</button>
-                <button class="button op-button" onclick="appendToDisplay('&#247')">&#247</button>
-                <button class="button" onclick="appendToDisplay('7')">7</button>
-                <button class="button" onclick="appendToDisplay('8')">8</button>
-                <button class="button" onclick="appendToDisplay('9')">9</button>
-                <button class="button op-button" onclick="appendToDisplay('&#215')">&#215</button>
-                <button class="button" onclick="appendToDisplay('4')">4</button>
-                <button class="button" onclick="appendToDisplay('5')">5</button>
-                <button class="button" onclick="appendToDisplay('6')">6</button>
-                <button class="button op-button" onclick="appendToDisplay('&#8722')">&#8722;</button>
-                <button class="button" onclick="appendToDisplay('1')">1</button>
-                <button class="button" onclick="appendToDisplay('2')">2</button>
-                <button class="button" onclick="appendToDisplay('3')">3</button>
-                <button class="button op-button" onclick="appendToDisplay('+')">+</button>
-                <button class="button" onclick="expand()">&#10530;</button>
-                <button class="button" onclick="appendToDisplay('0')">0</button>
-                <button class="button" onclick="appendToDisplay('.')">&#183;</button>
-                <button class="button eq-button" onclick="calculate()">=</button>
-                
-                
+            <div class="keypad">
+                <div class="scientific-buttons">
+                    <button class="button sci-button" onclick="toggleInverse()" id="btn-inv">INV</button>
+                    <button class="button sci-button" onclick="appendSci('sin(')" id="btn-sin">sin</button>
+                    <button class="button sci-button" onclick="appendSci('cos(')" id="btn-cos">cos</button>
+                    <button class="button sci-button" onclick="appendSci('tan(')" id="btn-tan">tan</button>
+                    
+                    <button class="button sci-button" onclick="appendSci('log(')" id="btn-log">log</button>
+                    <button class="button sci-button" onclick="appendSci('ln(')" id="btn-ln">ln</button>
+                    <button class="button sci-button" onclick="appendSci('&#8730;(')" id="btn-sqrt">&#8730;</button>
+                    <button class="button sci-button" onclick="appendSci('^')" id="btn-pow">^</button>
+                    
+                    <button class="button sci-button" onclick="appendToDisplay('&#960;')">&#960;</button>
+                    <button class="button sci-button" onclick="appendToDisplay('e')">e</button>
+                    <button class="button sci-button" onclick="appendToDisplay('(')">(</button>
+                    <button class="button sci-button" onclick="appendToDisplay(')')">)</button>
+                    
+                    <button class="button sci-button" onclick="appendToDisplay('!')">!</button>
+                    <button class="button sci-button" onclick="appendSci('^2')" id="btn-sqr">x&sup2;</button>
+                    <button class="button sci-button" onclick="appendSci('^3')" id="btn-cube">x&sup3;</button>
+                    <button class="button sci-button" onclick="appendToDisplay('1/')">1/x</button>
+                </div>
+
+                <div class="buttons">
+                    <button class="button" onclick="clearDisplay()">AC</button>
+                    <button class="button" onclick="deleteLast()">&#x232b;</button>
+                    <button class="button" onclick="appendToDisplay('%')">%</button>
+                    <button class="button op-button" onclick="appendToDisplay('&#247')">&#247</button>
+                    <button class="button" onclick="appendToDisplay('7')">7</button>
+                    <button class="button" onclick="appendToDisplay('8')">8</button>
+                    <button class="button" onclick="appendToDisplay('9')">9</button>
+                    <button class="button op-button" onclick="appendToDisplay('&#215')">&#215</button>
+                    <button class="button" onclick="appendToDisplay('4')">4</button>
+                    <button class="button" onclick="appendToDisplay('5')">5</button>
+                    <button class="button" onclick="appendToDisplay('6')">6</button>
+                    <button class="button op-button" onclick="appendToDisplay('&#8722')">&#8722;</button>
+                    <button class="button" onclick="appendToDisplay('1')">1</button>
+                    <button class="button" onclick="appendToDisplay('2')">2</button>
+                    <button class="button" onclick="appendToDisplay('3')">3</button>
+                    <button class="button op-button" onclick="appendToDisplay('+')">+</button>
+                    <button class="button" onclick="expand()">&#10530;</button>
+                    <button class="button" onclick="appendToDisplay('0')">0</button>
+                    <button class="button" onclick="appendToDisplay('.')">&#183;</button>
+                    <button class="button eq-button" onclick="calculate()">=</button>
+                </div>
             </div>
         </div>
 

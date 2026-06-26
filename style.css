@@ -1,57 +1,55 @@
 @font-face{
     font-family: 'OnePlusSlateBook';
     src: local("SlateForOnePlus-Book.ttf") ,url('SlateForOnePlus-Book.ttf') format("truetype");
-    /*font-family: 'OnePlusSlateRegular';
-    src: local("SlateForOnePlus-Regular.ttf") ,url('SlateForOnePlus-Regular.ttf') format("truetype");*/
 }
-*{
-  background-color:#121212;
-  color: white;
+
+* {
   box-sizing: border-box;
-  margin:0px;
+  margin: 0px;
   padding: 0px;
 }
 
-
 body {
+  background-color: #121212;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-family: 'OnePlusSlateBook';
+  font-family: 'OnePlusSlateBook', sans-serif;
   margin: 0;
   min-height: 100%;
 }
 
-
-/*entire calc*/
 .calculator {
-  background-color:black;
-  padding: 20px 5px 20px 5px;
+  background-color: black;
+  padding: 20px 5px;
   width: 350px;
-  height:700px;
-  border-radius:20px;
-  display:flex;
+  border-radius: 20px;
+  display: flex;
   flex-direction: column;
+  transition: width 0.4s ease, padding 0.4s ease;
 }
 
-/*entire top panel*/
-.top-panel
-{
+.calculator.expanded {
+  width: 600px;
+  padding-bottom: 30px;
+}
+
+.top-panel {
   background-color: #1a1a1a;
   border-radius: 20px 20px 10px 10px;
-  padding:6px;
-  width:100%;
-  height:240px;
+  padding: 6px;
+  width: 100%;
+  height: 240px;
   position: relative; 
+  transition: background-color 0.4s ease;
 }
 
-/*display within the top panel*/
 .display {
-  width:100%;
-  background-color: #1a1a1a;
-   font-size: clamp(2rem, 2vw, 2.5rem);
+  width: 100%;
+  font-size: clamp(2rem, 2vw, 2.5rem);
   height: 50px;
   line-height: 50px;
   margin-bottom: 20px;
@@ -59,15 +57,15 @@ body {
   color: #e0e0e0;
   text-align: left;    
   border-radius: 10px;
-  transition: all 0.2s ease;
   overflow-x: auto;
   white-space: nowrap;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-  transition: opacity 0.3s ease;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  transition: opacity 0.3s ease, background-color 0.4s ease;
 }
+
 .display::-webkit-scrollbar {
-  display: none; /* hide scrollbar */
+  display: none;
 }
 
 #displayText {
@@ -75,19 +73,13 @@ body {
   transition: opacity 0.3s ease;
 }
 
-#displayText.fade-out {
-  opacity: 0;
-}
-
-#displayText.fade-in {
-  opacity: 1;
-}
+#displayText.fade-out { opacity: 0; }
+#displayText.fade-in { opacity: 1; }
 
 #easterEgg {
   color: white;
   font-size: 2rem;
   text-align: center;
-  margin-top: 20px;
   opacity: 0;
   transform: translateY(50px);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -95,9 +87,7 @@ body {
   position: absolute;
   left: 0;
   right: 0;
-  background-color: transparent;
   top: 42%;
-  transform: translateY(50%);
   margin-top: 0;
 }
 
@@ -108,19 +98,34 @@ body {
 
 .top-panel.red-bg {
   background-color: #EB0028 !important;
-  transition: background-color 0.4s ease;
-}
-.display.red-bg {
-  background-color: #EB0028 !important;
-  transition: background-color 0.4s ease;
 }
 
-span{
-  background-color: #1a1a1a;
+.keypad {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-grow: 1;
 }
 
+.scientific-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 0;
+  padding: 0;
+  background-color: black;
+  opacity: 0;
+  overflow: hidden;
+  transition: width 0.4s ease, opacity 0.2s ease, padding 0.4s ease, min-width 0.4s ease;
+}
 
-/*Buttons*/
+.calculator.expanded .scientific-buttons {
+  width: 295px;
+  min-width: 295px;
+  opacity: 1;
+  padding: 10px 10px 0 5px;
+}
+
 .buttons {
   flex-grow: 1; 
   display: grid;
@@ -128,16 +133,14 @@ span{
   gap: 10px;
   width: 100%;
   padding: 10px 5px 0 5px;
-  box-sizing: border-box;
   background-color: black;
 }
 
-/*button style*/
-
 .button {
-  position:relative;
-  overflow:hidden;
+  position: relative;
+  overflow: hidden;
   background-color: black;
+  color: white;
   border: none;
   border-radius: 50%;
   margin: 1px;
@@ -145,28 +148,26 @@ span{
   height: 72px;
   width: 72px;
   text-align: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: width 0.3s ease, height 0.3s ease, font-size 0.3s ease;
 }
 
-.op-button {
-  background-color: #1a1a1a;
-  height: 70px;
-  width: 70px;
+.calculator.expanded .button {
+  width: 60px;
+  height: 60px;
+  font-size: 1.1em;
 }
 
-.eq-button {
-  background-color: #EB0028;
-  height: 70px;
-  width: 70px;
-}
+.op-button { background-color: #1a1a1a; }
+.eq-button { background-color: #EB0028; }
+.sci-button { background-color: #1a1a1a; font-size: 1.2em; }
+.inv-btn { background-color: #2a2a2a; color: #ffeb3b; }
 
-/*when clicked*/
-.button:active
-{
-  background-color: #1a1a1a; /* grey color on press */
-}
+.button:active { background-color: #1a1a1a; }
+.op-button:active, .sci-button:active { background-color: #2a2a2a; }
+.eq-button:active { background-color: #c90022; }
 
-
-/*ripple effect*/
 .button::after {
   content: "";
   position: absolute;
@@ -177,16 +178,12 @@ span{
   left: 50%;
   background-color: rgba(255, 255, 255, 0.1);
   transform: translate(-50%, -50%) scale(0);
-  transition:
-    transform .7s ease-out,
-    opacity 0s linear .6s; /*0s : how fast go, .6: how fast expand*/
+  transition: transform .7s ease-out, opacity 0s linear .6s;
   pointer-events: none;
   z-index: 0;
 }
 
-.button:active::after{
-  transform: translate(-50%, -50%) scale(1); /* scale determines size of ripple */
-  opacity: 0; /* disappears suddenly */
+.button:active::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0;
 }
-
-

@@ -1,3 +1,49 @@
+let isInverse = false;
+
+function toggleInverse() {
+  isInverse = !isInverse;
+  const invBtn = document.getElementById('btn-inv');
+  if (isInverse) {
+    invBtn.style.color = '#EB0028';
+    document.getElementById('btn-sin').textContent = 'asin';
+    document.getElementById('btn-cos').textContent = 'acos';
+    document.getElementById('btn-tan').textContent = 'atan';
+    document.getElementById('btn-log').textContent = '10^x';
+    document.getElementById('btn-ln').textContent = 'e^x';
+  } else {
+    invBtn.style.color = '#ffeb3b';
+    document.getElementById('btn-sin').textContent = 'sin';
+    document.getElementById('btn-cos').textContent = 'cos';
+    document.getElementById('btn-tan').textContent = 'tan';
+    document.getElementById('btn-log').textContent = 'log';
+    document.getElementById('btn-ln').textContent = 'ln';
+  }
+}
+
+function appendSci(val) {
+  if (isInverse) {
+    if (val === 'sin(') val = 'asin(';
+    else if (val === 'cos(') val = 'acos(';
+    else if (val === 'tan(') val = 'atan(';
+    else if (val === 'log(') val = '10^(';
+    else if (val === 'ln(') val = 'e^(';
+  }
+  appendToDisplay(val);
+}
+
+function expand() {
+  const calc = document.querySelector('.calculator');
+  calc.classList.toggle('expanded');
+}
+
+function factorial(n) {
+  if (n < 0) return NaN;
+  if (n === 0 || n === 1) return 1;
+  let res = 1;
+  for (let i = 2; i <= n; i++) res *= i;
+  return res;
+}
+
 function clearDisplay() {
   const disp = document.getElementById("displayText");
   //const wrap = document.getElementById("display");
@@ -82,6 +128,24 @@ function processSymbols(expr) {
         .replace(/×/g, '*')
         .replace(/÷/g, '/')
         .replace(/−/g, '-');
+
+    // Inverse and Scientific replacements
+    expr = expr.replace(/asin\(/g, 'Math.asin(');
+    expr = expr.replace(/acos\(/g, 'Math.acos(');
+    expr = expr.replace(/atan\(/g, 'Math.atan(');
+    expr = expr.replace(/10\^\(/g, '10**(');
+    expr = expr.replace(/e\^\(/g, 'Math.E**(');
+    
+    expr = expr.replace(/sin\(/g, 'Math.sin(');
+    expr = expr.replace(/cos\(/g, 'Math.cos(');
+    expr = expr.replace(/tan\(/g, 'Math.tan(');
+    expr = expr.replace(/log\(/g, 'Math.log10(');
+    expr = expr.replace(/ln\(/g, 'Math.log(');
+    expr = expr.replace(/√\(/g, 'Math.sqrt(');
+    expr = expr.replace(/π/g, 'Math.PI');
+    expr = expr.replace(/e/g, 'Math.E');
+    expr = expr.replace(/\^/g, '**');
+    expr = expr.replace(/(\d+)!/g, 'factorial($1)');
 
     // Case 1: e.g. 5%8 → (5/100)*8
     expr = expr.replace(/(\d+(\.\d+)?)%(\d+)/g, "($1/100)*$3");
